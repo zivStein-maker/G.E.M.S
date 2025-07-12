@@ -21,12 +21,16 @@ Maze::Maze()
 Maze::Maze(unsigned int width,unsigned int height)
 {
     _maze = std::vector<std::vector<Tile>>(height, std::vector<Tile>(width, empty));
-	generateMaze(width, height);
 }
 
 Maze::~Maze()
 {
     
+}
+
+std::vector<std::vector<Tile>> Maze::getMaze() const
+{
+    return _maze;
 }
 
 void Maze::printMaze()

@@ -18,6 +18,7 @@ public:
 	Maze(unsigned int width, unsigned int heigth);
 	~Maze();
 
+	std::vector<std::vector<Tile>> getMaze() const;
     void printMaze();
     
 

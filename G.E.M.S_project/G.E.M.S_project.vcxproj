@@ -123,11 +123,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Environment.h" />
     <ClInclude Include="Maze.h" />
+    <ClInclude Include="Solution.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Environment.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="Solution.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
