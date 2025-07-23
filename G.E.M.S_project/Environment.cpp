@@ -22,7 +22,7 @@ Solution Environment::solveMaze()
     {
         genrations++;
         std::vector<std::pair<int, Solution>> nextGen;
-        for (const auto& solution : _population)
+        for (auto& solution : _population)
         {
             int fitnessSum = 0;
             int fitness = culcFitness(solution);
@@ -37,6 +37,7 @@ Solution Environment::solveMaze()
             if(fitness == DEAD_END)
 				continue;
 
+            solution.advanceSearch();
             nextGen.emplace_back(fitness, solution);
         }
         float averageFitness = _population.size();
