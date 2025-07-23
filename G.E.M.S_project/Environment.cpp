@@ -94,23 +94,25 @@ int Environment::culcFitness(const Solution& solution) const
     int x = 1;
     int y = 1;
     Direction privDir;
-    for (const auto& dir : solution.getPath())
+    for (int i = solution.getStartSearchIndex(); i <= solution.getEndSearchIndex(); i++)
     {
-        if(x == 1 && y == 1)
-			privDir = dir;
-        
+        const Direction& dir = solution.getPath()[i];
+
+        if (x == 1 && y == 1)
+            privDir = dir;
 
         switch (dir)
         {
-            case up:
-                y--; break;
-            case down:
-                y++; break;
-            case left:
-                x--; break;
-            case right:
-                x++; break;
+        case up:
+            y--; break;
+        case down:
+            y++; break;
+        case left:
+            x--; break;
+        case right:
+            x++; break;
         }
+
         try
         {
             if (_maze.getMaze()[y][x] == Tile::empty)
@@ -124,13 +126,13 @@ int Environment::culcFitness(const Solution& solution) const
                     continue;
                 }
 
-				privDir = dir;
+                privDir = dir;
                 score++;
             }
 
             else if (_maze.getMaze()[y][x] == Tile::end)
             {
-                
+
                 return FINISHED_MAZE;
             }
 
@@ -139,7 +141,7 @@ int Environment::culcFitness(const Solution& solution) const
         catch (...)
         {
             return score;
-		}
+        }
     }
     return score;
 }
