@@ -21,8 +21,11 @@ class Solution // this class represents the population of solutions for the algo
 		~Solution();
 		/// todo: implement the function to calculate the fitness of the solution
 		void mutate();
-
+		void printSolution(const Maze& maze);
+		
 		std::vector<Direction> getPath() const;
 	private:
 		std::vector<Direction> _path;
+		unsigned int startSearchIndex = 0;
+		unsigned int endSearchIndex;
 };

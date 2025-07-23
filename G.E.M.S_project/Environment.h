@@ -2,22 +2,33 @@
 
 #include "Maze.h"
 #include "Solution.h"
+#include <algorithm>
 #include <set>
+
+#define FINISHED_MAZE -999
+#define DEAD_END -1
 
 class Environment
 {
 public:
-	Environment(unsigned int startingPopulationAmount);
+	Environment(const Maze& maze, unsigned int startingPopulationAmount);
 	~Environment();
 
+
+	Solution solveMaze();
 	bool isFinished() const;
 	float culcAverageFitness() const;
 
 private:
 
-	unsigned int culcFitness(const Solution& solution) const;
+	int culcFitness(const Solution& solution) const;
+
+	Direction invertDirection(const Direction& direction) const;
+	bool isDeadEnd(int x, int y, const Direction& PrivInstraction) const;
+	bool isLooping(int x, int y,const Direction& privInstraction) const;
 
 	Maze _maze;
-	std::set<Solution> _population;
+	std::vector<Solution> _population;
 	bool _isFinished = false;
+	const int _startingPopulationAmount;
 };

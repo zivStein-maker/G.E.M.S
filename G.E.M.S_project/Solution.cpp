@@ -1,10 +1,12 @@
 #include "Solution.h"
 
-Solution::Solution(unsigned int higth, unsigned int wigth)  
-{  
-	srand(time(NULL));
+#define MUTATION_FREQUENSE 500 
+#define SEARCHD_PART_DOURTION 10
 
-    _path = std::vector<Direction>(higth * wigth, up);
+Solution::Solution(unsigned int height, unsigned int wigth)
+{  
+    _path = std::vector<Direction>(height * wigth, up);//need to change this to make them work in shorter parts
+	endSearchIndex = ( SEARCHD_PART_DOURTION < _path.size() ) ? _path.size() : SEARCHD_PART_DOURTION;
 
 	for (auto& direction : _path)
 		direction = static_cast<Direction>(rand() % 4);
@@ -12,17 +14,22 @@ Solution::Solution(unsigned int higth, unsigned int wigth)
 
 Solution::Solution(const Solution& father, const Solution& mather)
 {
-	srand(time(NULL));
-
 	_path = std::vector<Direction>(father._path.size(), up);
 
-	for (unsigned int i = 0; i < father._path.size(); ++i)
+	startSearchIndex = rand() % 2 == 0 ? father.startSearchIndex : mather.startSearchIndex;
+	endSearchIndex = rand() % 2 == 0 ? father.endSearchIndex : mather.endSearchIndex;
+
+	unsigned int index = rand() % father._path.size();
+
+	for (unsigned int i = 0; i < father._path.size(); i++)
 	{
-		if (rand() % 2 == 0)
+		if (i <= index)
 			(_path)[i] = (father._path)[i];
 		else
 			(_path)[i] = (mather._path)[i];
 	}
+
+	mutate();
 }
 
 Solution::~Solution()
@@ -32,8 +39,63 @@ Solution::~Solution()
 
 void Solution::mutate()
 {//addes a random mutation to the path (genome).
-	int index = rand() % _path.size();
-	_path[index] = static_cast<Direction>(rand() % 4);
+	
+	if(rand() % MUTATION_FREQUENSE == 1)
+	{
+		int index = rand() % _path.size();
+		_path[index] = static_cast<Direction>(rand() % 4);
+	}
+}
+
+void Solution::printSolution(const Maze& maze)
+{
+	std::vector<std::vector<char>> pathVisualition;
+	for (const auto& row : maze.getMaze())
+	{
+		std::string line = "";
+		for (const auto& tile : row)
+		{
+			switch (tile)
+			{
+			case wall:  line += "#"; break;
+			case empty: line += " "; break;
+			case start: line += "S"; break;
+			case end:   line += "E"; break;
+			}
+		}
+		pathVisualition.emplace_back(line.begin(),line.end());
+	}
+
+	int x = 1;
+	int y = 1;
+	for (const auto& dir : _path)
+	{
+		if (y >= maze.getHeight() or y < 0 or x >= maze.getWidth() or x < 0 or maze.getMaze()[y][x] == Tile::wall or maze.getMaze()[y][x] == Tile::end)
+			break;
+		switch (dir)
+		{
+		case up:
+			pathVisualition[y][x] = '^';
+			y--; break;
+		case down:
+			pathVisualition[y][x] = 'Y';
+			y++; break;
+		case left:
+			pathVisualition[y][x] = '<';
+			x--; break;
+		case right:
+			pathVisualition[y][x] = '>';
+			x++; break;
+		}
+	}
+	for (const auto& row : pathVisualition)
+	{
+		for (const auto& tile : row)
+		{
+			std::cout << tile;
+		}
+		std::cout << '\n';
+	}
 }
 
 std::vector<Direction> Solution::getPath() const
