@@ -37,7 +37,7 @@ Solution Environment::solveMaze()
             if(fitness == DEAD_END)
 				continue;
 
-            solution.advanceSearch();
+            solution.advanceSearch(); /// check whats the problem here
             nextGen.emplace_back(fitness, solution);
         }
         float averageFitness = _population.size();
@@ -95,7 +95,7 @@ int Environment::culcFitness(const Solution& solution) const
     int x = 1;
     int y = 1;
     Direction privDir;
-    for (int i = solution.getStartSearchIndex(); i <= solution.getEndSearchIndex(); i++)
+    for (int i = 0; i <= solution.getEndSearchIndex(); i++)
     {
         const Direction& dir = solution.getPath()[i];
 

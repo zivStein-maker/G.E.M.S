@@ -6,7 +6,7 @@
 Solution::Solution(unsigned int height, unsigned int wigth)
 {  
     _path = std::vector<Direction>(height * wigth, up);//need to change this to make them work in shorter parts
-	_endSearchIndex = ( SEARCHD_PART_DOURTION < _path.size() ) ? _path.size() : SEARCHD_PART_DOURTION;
+	_endSearchIndex = ( SEARCHD_PART_DOURTION < _path.size() ) ?  SEARCHD_PART_DOURTION : _path.size() - 1;
 
 	for (auto& direction : _path)
 		direction = static_cast<Direction>(rand() % 4);
@@ -16,7 +16,6 @@ Solution::Solution(const Solution& father, const Solution& mather)
 {
 	_path = std::vector<Direction>(father._path.size(), up);
 
-	_startSearchIndex = rand() % 2 == 0 ? father._startSearchIndex : mather._startSearchIndex;
 	_endSearchIndex = rand() % 2 == 0 ? father._endSearchIndex : mather._endSearchIndex;
 
 	unsigned int index = rand() % father._path.size();
@@ -100,7 +99,6 @@ void Solution::printSolution(const Maze& maze)
 
 void Solution::advanceSearch()
 {
-	_startSearchIndex = _endSearchIndex;
 	_endSearchIndex = _endSearchIndex + SEARCHD_PART_DOURTION >= _path.size() ? _path.size() - 1 : _endSearchIndex + SEARCHD_PART_DOURTION;
 }
 
@@ -109,10 +107,6 @@ std::vector<Direction> Solution::getPath() const
 	return _path;
 }
 
-unsigned int Solution::getStartSearchIndex() const
-{
-	return _startSearchIndex;
-}
 
 unsigned int Solution::getEndSearchIndex() const
 {

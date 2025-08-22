@@ -24,11 +24,9 @@ class Solution // this class represents the population of solutions for the algo
 		void advanceSearch();
 
 		std::vector<Direction> getPath() const;
-		unsigned int getStartSearchIndex() const;
 		unsigned int getEndSearchIndex() const;
 
 	private:
 		std::vector<Direction> _path;
-		unsigned int _startSearchIndex = 0;
 		unsigned int _endSearchIndex;
 };
