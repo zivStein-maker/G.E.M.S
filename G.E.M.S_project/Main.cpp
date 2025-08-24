@@ -3,7 +3,7 @@
 
 int main(int args,char** argv)
 {
-	Maze maze = Maze();
+	Maze maze = Maze(1);
 	maze.printMaze();
 	Environment god = Environment(maze, 100);
 	auto start = std::chrono::high_resolution_clock::now();

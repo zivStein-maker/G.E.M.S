@@ -1,12 +1,11 @@
 #include "Solution.h"
 
-#define MUTATION_FREQUENSE 500 
+#define MUTATION_RATE 0.01f
 #define SEARCHD_PART_DOURTION 10
 
 Solution::Solution(unsigned int height, unsigned int wigth)
 {  
     _path = std::vector<Direction>(height * wigth, up);//need to change this to make them work in shorter parts
-	endSearchIndex = ( SEARCHD_PART_DOURTION < _path.size() ) ? _path.size() : SEARCHD_PART_DOURTION;
 
 	for (auto& direction : _path)
 		direction = static_cast<Direction>(rand() % 4);
@@ -16,8 +15,6 @@ Solution::Solution(const Solution& father, const Solution& mather)
 {
 	_path = std::vector<Direction>(father._path.size(), up);
 
-	startSearchIndex = rand() % 2 == 0 ? father.startSearchIndex : mather.startSearchIndex;
-	endSearchIndex = rand() % 2 == 0 ? father.endSearchIndex : mather.endSearchIndex;
 
 	unsigned int index = rand() % father._path.size();
 
@@ -40,7 +37,7 @@ Solution::~Solution()
 void Solution::mutate()
 {//addes a random mutation to the path (genome).
 	
-	if(rand() % MUTATION_FREQUENSE == 1)
+	if ((rand() / (float)RAND_MAX) < MUTATION_RATE) 
 	{
 		int index = rand() % _path.size();
 		_path[index] = static_cast<Direction>(rand() % 4);

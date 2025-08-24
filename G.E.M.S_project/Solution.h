@@ -26,6 +26,4 @@ class Solution // this class represents the population of solutions for the algo
 		std::vector<Direction> getPath() const;
 	private:
 		std::vector<Direction> _path;
-		unsigned int startSearchIndex = 0;
-		unsigned int endSearchIndex;
 };
