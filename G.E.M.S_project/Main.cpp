@@ -3,9 +3,9 @@
 
 int main(int args,char** argv)
 {
-	Maze maze = Maze(1);
+	Maze maze = Maze();
 	maze.printMaze();
-	Environment god = Environment(maze, 100);
+	Environment god = Environment(maze, 150);
 	auto start = std::chrono::high_resolution_clock::now();
 	Solution result = god.solveMaze();
 	auto end = std::chrono::high_resolution_clock::now();

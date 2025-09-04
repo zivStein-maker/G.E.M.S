@@ -1,6 +1,6 @@
 #include "Solution.h"
 
-#define MUTATION_RATE 0.01f
+#define MUTATION_RATE 0.07f
 #define SEARCHD_PART_DOURTION 10
 
 Solution::Solution(unsigned int height, unsigned int wigth)

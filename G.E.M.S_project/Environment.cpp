@@ -50,13 +50,14 @@ Solution Environment::solveMaze()
        
         std::cout << "best fitness: " << nextGen[0].first << std::endl;
 		std::cout << "population size: " << _population.size() << std::endl;
-
+		////r,d,d,r,r,r,u,u,r,r,d,d,d,d,d,l,d,d,r,d,d (21) prime solution for 10x10 maze
 		std::vector<Solution> newPopulation;
+
 		const int eliteCount = std::max(1, static_cast<int>(nextGen.size() * 0.1));// Keep top 10% to next generation
         for (size_t i = 0; i < eliteCount; i++)
             newPopulation.push_back(nextGen[i].second);
        
-        for (int i = 0; i < (nextGen.size() / 3) * 2; i+=2)
+        for (int i = 0; i < (nextGen.size() / 2) ; i+=2)
         {
             Solution parent1 = nextGen[i].second;
             Solution parent2 = nextGen[i + 1].second;
